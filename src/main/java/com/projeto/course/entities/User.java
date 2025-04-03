@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,9 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	//	Esconder informações sensíveis como senhas ou dados privados.
+	//ele evita trazer a lista de pedido que esta associado ao cliente quando o cliente for selecionado
+	@JsonIgnore // Evitar recursão infinita em relações @OneToMany e @ManyToOne.
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
