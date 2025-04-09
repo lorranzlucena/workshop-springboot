@@ -5,10 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -30,7 +34,10 @@ public class Product implements Serializable {
 	//foi instanciado para garantir que coleção n comece com NULL
 	//Set<Category>	Não permite duplicação de categorias
 	//usa uma tabela hash, o que dá desempenho excelente para add, remove
-	@Transient
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", // Define o nome da tabela de junção no banco de dados
+	joinColumns = @JoinColumn(name = "product_id"), // product_id será uma coluna na tabela tb_product_category, apontando para um produto.
+	inverseJoinColumns = @JoinColumn(name = "category_id")) // category_id será a outra coluna da tabela tb_product_category, apontando para uma categori
 	private Set<Category> categories = new HashSet<>();
 
 	public Product() {
