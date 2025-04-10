@@ -3,6 +3,7 @@ package com.projeto.course.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projeto.course.entities.pk.OrderItemPk;
 
 import jakarta.persistence.EmbeddedId;
@@ -16,8 +17,9 @@ public class OrderItem  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId//
-	private OrderItemPk id;
+	// sempre que criar uma classe auxiliar com id composto, tem que instanciar
+	@EmbeddedId
+	private OrderItemPk id = new OrderItemPk();
 	
 	private Integer quantity;
 	private Double price;
@@ -33,7 +35,8 @@ public class OrderItem  implements Serializable {
 		id.setOrder(order);
 		id.setProduct(product);
 	}
-
+	
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
