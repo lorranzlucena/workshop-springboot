@@ -32,5 +32,10 @@ public class UserService {
 		// Se findById(id) não encontrar o usuário, user será null e o programa quebrará ao chamar getNome().
 	}
 	
+	public User insert(User obj) {
+		
+		return repository.save(obj);
+	}
+	
 	
 }
