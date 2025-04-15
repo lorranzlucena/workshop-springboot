@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.projeto.course.entities.User;
 import com.projeto.course.repositories.UserRepository;
+import com.projeto.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -20,13 +21,15 @@ public class UserService {
 		return repository.findAll();
 	}
 
+	
 	public User findById(Long Id) {
 		/**
 		 *  representa um valor que pode ou não estar presente. Ele ajuda a evitar NullPointerException 
 		 *  e melhora a legibilidade do código ao lidar com valores opcionais.
 		 */
 		Optional<User> obj =  repository.findById(Id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundException(Id));
+		
 		// se colocar assim: 
 		//User user = userRepository.findById(id); 
 		// Se findById(id) não encontrar o usuário, user será null e o programa quebrará ao chamar getNome().
