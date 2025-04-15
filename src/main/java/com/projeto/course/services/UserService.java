@@ -41,4 +41,23 @@ public class UserService {
 		repository.deleteById(id);
 	}
 	
+	public User update(Long id, User obj) {
+		
+		// aqui apenas vai monitorar o objeto pra poder trabalha com ele depois.
+		User entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+	
+	/** 
+	 * metodo resposnavel por atualizar os dados do entity, com os dados que chegou do obj 
+	 */
+	private void updateData(User entity, User obj) {
+		
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+
+	}
+	
 }
