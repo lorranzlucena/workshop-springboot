@@ -24,6 +24,15 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 	
+	
+	
+	/**
+	 * ResponseEntity
+	 *Ela te dá controle total sobre: 
+	 *O corpo (body) da resposta 
+	 *O status HTTP (ex: 200, 400, 404, 500…)
+	 *Os cabeçalhos (headers) da resposta 
+	 */
 	@ExceptionHandler(DatabaseException.class)//irá interceptar qualquer exceção desse tipo e ira fazer o tratamento
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
 		

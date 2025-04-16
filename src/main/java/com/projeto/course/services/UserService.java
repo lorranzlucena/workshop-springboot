@@ -13,6 +13,8 @@ import com.projeto.course.repositories.UserRepository;
 import com.projeto.course.resource.exceptions.DatabaseException;
 import com.projeto.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -55,11 +57,16 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
+		try {
+			// aqui apenas vai monitorar o objeto pra poder trabalha com ele depois.
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 		
-		// aqui apenas vai monitorar o objeto pra poder trabalha com ele depois.
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+
 	}
 	
 	/** 
